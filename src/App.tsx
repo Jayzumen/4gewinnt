@@ -30,52 +30,52 @@ function App() {
 
   const checkForWin = (
     board: string[][],
-    rowIndex: number,
     colIndex: number,
+    rowIndex: number,
     currPlayer: string
   ) => {
-    const rowCount = board.length;
-    const colCount = board[0].length;
+    const colCount = board.length;
+    const rowCount = board[0].length;
 
     // Check for a win horizontally
-    for (let i = 0; i <= colCount - 4; i++) {
+    for (let i = 0; i <= rowCount - 4; i++) {
       if (
-        board[rowIndex][i] === currPlayer &&
-        board[rowIndex][i + 1] === currPlayer &&
-        board[rowIndex][i + 2] === currPlayer &&
-        board[rowIndex][i + 3] === currPlayer
+        board[colIndex][i] === currPlayer &&
+        board[colIndex][i + 1] === currPlayer &&
+        board[colIndex][i + 2] === currPlayer &&
+        board[colIndex][i + 3] === currPlayer
       ) {
         setWinningSlots([
-          [rowIndex, i],
-          [rowIndex, i + 1],
-          [rowIndex, i + 2],
-          [rowIndex, i + 3],
+          [colIndex, i],
+          [colIndex, i + 1],
+          [colIndex, i + 2],
+          [colIndex, i + 3],
         ]);
         return true;
       }
     }
 
     // Check for a win vertically
-    for (let i = 0; i <= rowCount - 4; i++) {
+    for (let i = 0; i <= colCount - 4; i++) {
       if (
-        board[i][colIndex] === currPlayer &&
-        board[i + 1][colIndex] === currPlayer &&
-        board[i + 2][colIndex] === currPlayer &&
-        board[i + 3][colIndex] === currPlayer
+        board[i][rowIndex] === currPlayer &&
+        board[i + 1][rowIndex] === currPlayer &&
+        board[i + 2][rowIndex] === currPlayer &&
+        board[i + 3][rowIndex] === currPlayer
       ) {
         setWinningSlots([
-          [i, colIndex],
-          [i + 1, colIndex],
-          [i + 2, colIndex],
-          [i + 3, colIndex],
+          [i, rowIndex],
+          [i + 1, rowIndex],
+          [i + 2, rowIndex],
+          [i + 3, rowIndex],
         ]);
         return true;
       }
     }
 
     // Check for a win diagonally up and to the right
-    for (let i = 0; i <= rowCount - 4; i++) {
-      for (let j = 0; j <= colCount - 4; j++) {
+    for (let i = 0; i <= colCount - 4; i++) {
+      for (let j = 0; j <= rowCount - 4; j++) {
         if (
           board[i][j] === currPlayer &&
           board[i + 1][j + 1] === currPlayer &&
@@ -94,8 +94,8 @@ function App() {
     }
 
     // Check for a win diagonally up and to the left
-    for (let i = 0; i <= rowCount - 4; i++) {
-      for (let j = colCount - 1; j >= 3; j--) {
+    for (let i = 0; i <= colCount - 4; i++) {
+      for (let j = rowCount - 1; j >= 3; j--) {
         if (
           board[i][j] === currPlayer &&
           board[i + 1][j - 1] === currPlayer &&
@@ -122,31 +122,31 @@ function App() {
   };
 
   // handle game logic
-  const handleClick = (rowIndex: number) => {
+  const handleClick = (colIndex: number) => {
     // Check if game is over
     if (gameOver) {
       return;
     }
 
     // Check if column is already full
-    if (board[rowIndex].every((cell) => cell !== null)) {
+    if (board[colIndex].every((cell) => cell !== null)) {
       return;
     }
 
     // Find last empty cell in clicked column
-    let colIndex = board[rowIndex].length - 1;
-    while (colIndex >= 0 && board[rowIndex][colIndex] !== null) {
-      colIndex--;
+    let rowIndex = board[colIndex].length - 1;
+    while (rowIndex >= 0 && board[colIndex][rowIndex] !== null) {
+      rowIndex--;
     }
 
     // Create copy of board
     const newBoard = [...board];
 
     // Update copied board with current player
-    newBoard[rowIndex][colIndex] = currPlayer;
+    newBoard[colIndex][rowIndex] = currPlayer;
 
     // Check for win
-    if (checkForWin(newBoard, rowIndex, colIndex, currPlayer)) {
+    if (checkForWin(newBoard, colIndex, rowIndex, currPlayer)) {
       setGameOver(true);
       return;
     }
