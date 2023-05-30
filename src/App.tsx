@@ -162,7 +162,7 @@ function App() {
   return (
     <div className="bg-slate-900 min-h-screen text-white flex gap-8 p-4 justify-center">
       <div className="flex flex-col gap-4 text-center min-w-[300px]">
-        <h1 className="text-3xl font-semibold underline">Connect 4</h1>
+        <h1 className="text-3xl font-semibold underline">4 Gewinnt</h1>
         {/* Player */}
         <p className="text-xl">
           Current Player:{" "}
